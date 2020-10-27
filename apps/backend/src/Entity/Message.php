@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
+ *     attributes={"order"={"createdAt": "DESC"}},
  *     itemOperations={
  *          "get"={
  *             "controller"=NotFoundAction::class,
@@ -76,6 +77,7 @@ class Message
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"message:read"})
      */
     private $createdAt;
 

@@ -2,9 +2,11 @@ FROM php:7.4-fpm
 
 LABEL name="senderino-backend"
 
-RUN apt-get update && \
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get update && \
     apt-get install -y \
-    libzip-dev
+    libzip-dev \
+    nodejs
 
 RUN docker-php-ext-install \
     bcmath \
@@ -26,6 +28,7 @@ COPY docker/php/senderino-php.ini /usr/local/etc/php/conf.d/
 
 RUN PATH=$PATH:/usr/src/app/vendor/bin:bin
 
+ARG NODE_ENV=production
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /tmp
 ENV COMPOSER_VERSION 2.0.0
@@ -44,8 +47,5 @@ RUN set -eux; \
     composer --ansi --version --no-interaction; \
     rm -f /tmp/installer.php;
 
-RUN composer install --no-scripts --prefer-dist
-
-# POST INSTALL
-# php bin/console rabbitmq:setup-fabric
-# php bin/console do:mi:mi
+RUN composer install --no-scripts --prefer-dist && \
+    npm install

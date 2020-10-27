@@ -36,7 +36,7 @@ class MessageRepository extends ServiceEntityRepository
                     'accepted',
                     'queued',
                     'sending',
-
+                    'sent',
                 ]
             )
             ->orderBy('m.statusUpdatedAt', 'ASC')

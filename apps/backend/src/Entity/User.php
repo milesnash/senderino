@@ -41,7 +41,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "user:write", "message:read"})
      * @Assert\NotBlank()
      * @Assert\Email()
      */
